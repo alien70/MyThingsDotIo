@@ -14,13 +14,20 @@ namespace MyThingsDotIo.Models
 
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<Person> Person { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
 
             optionsBuilder.UseSqlServer(_config["ConnectionStrings:MyThingsDotIoConnection"]);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Person>()
+                .HasIndex(c => c.Alias)
+                .IsUnique();
         }
     }
 }

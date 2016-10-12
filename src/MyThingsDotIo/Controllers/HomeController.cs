@@ -4,16 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MyThingsDotIo.Models;
+using Microsoft.Extensions.Logging;
 
 namespace MyThingsDotIo.Controllers
 {
     public class HomeController : Controller
     {
         private IMyThingsDotIoRepository _repository;
+        private ILogger<HomeController> _logger;
 
-        public HomeController(IMyThingsDotIoRepository repository)
+        public HomeController(IMyThingsDotIoRepository repository, ILogger<HomeController> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -30,7 +33,7 @@ namespace MyThingsDotIo.Controllers
 
         public IActionResult Contact()
         {
-            var data = _repository.GetAllUsers();
+            var data = _repository.GetAll();
 
             return View(data);
         }

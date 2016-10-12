@@ -8,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MyThingsDotIo.Models;
+using Newtonsoft.Json.Serialization;
+using AutoMapper;
+using MyThingsDotIo.ViewModels;
 
 namespace MyThingsDotIo
 {
@@ -28,12 +31,22 @@ namespace MyThingsDotIo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Aggiunge il logger
+            services.AddLogging();
+
             services.AddDbContext<MyThingsDotIoContext>();
 
             services.AddScoped<IMyThingsDotIoRepository, MyThingsDotIoRepository>();
 
+
+
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(config =>
+                {
+                    // Configura il web service in modo da ritornare il nome delle proprietà in formato camel cased anzichè pascal cased
+                    config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });
 
             services.AddSingleton(provider => Configuration);
         }
@@ -41,17 +54,26 @@ namespace MyThingsDotIo
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            //loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            //loggerFactory.AddDebug();
+
+            // Configurazione di AutoMapper
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<PersonViewModel, Person>().ReverseMap();
+            });
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
+                loggerFactory.AddDebug(LogLevel.Information);
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+
+                loggerFactory.AddDebug(LogLevel.Debug);
             }
 
             app.UseStaticFiles();

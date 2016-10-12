@@ -8,9 +8,10 @@ using MyThingsDotIo.Models;
 namespace MyThingsDotIo.Migrations
 {
     [DbContext(typeof(MyThingsDotIoContext))]
-    partial class MyThingsDotIoContextModelSnapshot : ModelSnapshot
+    [Migration("20161012214322_AddedUniqueIdToPerson7")]
+    partial class AddedUniqueIdToPerson7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")

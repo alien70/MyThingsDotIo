@@ -8,9 +8,10 @@ using MyThingsDotIo.Models;
 namespace MyThingsDotIo.Migrations
 {
     [DbContext(typeof(MyThingsDotIoContext))]
-    partial class MyThingsDotIoContextModelSnapshot : ModelSnapshot
+    [Migration("20161012163852_AddedUniqueIdToPerson3")]
+    partial class AddedUniqueIdToPerson3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -31,14 +32,9 @@ namespace MyThingsDotIo.Migrations
 
                     b.Property<string>("LastName");
 
-                    b.Property<DateTime?>("Modified");
-
                     b.Property<Guid>("UniqueId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Alias")
-                        .IsUnique();
 
                     b.ToTable("Person");
                 });
