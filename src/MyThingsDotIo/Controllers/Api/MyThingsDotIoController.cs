@@ -115,16 +115,31 @@ namespace MyThingsDotIo.Controllers.Api
         }
 
         [HttpDelete("{alias}")]
-        public void Delete(string alias)
+        public async Task<IActionResult> Delete(string alias)
         {
-            _repository.Remove(alias);
+            if (alias == null || alias.Length == 0)
+                return BadRequest();
+
+            var person = await _repository.Remove(alias);
+
+            if (person == null)
+                return NotFound();
+
+            return Ok(Mapper.Map<PersonViewModel>(person));
         }
 
         [HttpDelete("{uuid}")]
-        public void Delete(Guid uniqueId)
+        public async Task<IActionResult> Delete(Guid? uniqueId)
         {
-            _repository.Remove(uniqueId);
-        }
+            if (!uniqueId.HasValue)
+                return BadRequest();
 
+            var person = await _repository.Remove(uniqueId);
+
+            if (person == null)
+                return NotFound();
+
+            return Ok(Mapper.Map<PersonViewModel>(person));
+        }
     }
 }

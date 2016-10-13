@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,7 @@ namespace MyThingsDotIo.Models
         {
             _logger.LogInformation($"Updating item {item.UniqueId}");
             var toUpdate = _context.Person.SingleOrDefault(p => p.UniqueId == item.UniqueId);
-            if(toUpdate != null)
+            if (toUpdate != null)
             {
                 toUpdate.FirstName = item.FirstName;
                 toUpdate.LastName = item.LastName;
@@ -71,18 +72,51 @@ namespace MyThingsDotIo.Models
             }
         }
 
-        public void Remove(string alias)
+        public async Task<Person> Remove(string alias)
         {
-            var toRemove = _context.Person.SingleOrDefault(i => i.Alias == alias);
-            if (toRemove != null)
-                _context.Person.Remove(toRemove);
+            var person = await _context.Person
+                .AsNoTracking()
+                .SingleOrDefaultAsync(i => i.Alias == alias);
+
+            if (person != null)
+            {
+                try
+                {
+                    _context.Person.Remove(person);
+                    await SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Failed to remove person: {ex}");
+                }
+            }
+
+            return person;
         }
 
-        public void Remove(Guid uniqueId)
+        public async Task<Person> Remove(Guid? uniqueId)
         {
-            var toRemove = _context.Person.SingleOrDefault(i => i.UniqueId == uniqueId);
-            if (toRemove != null)
-                _context.Person.Remove(toRemove);
+            if (!uniqueId.HasValue)
+                return null;
+
+            var person = await _context.Person
+                .AsNoTracking()
+                .SingleOrDefaultAsync(i => i.UniqueId == uniqueId);
+
+            if (person != null)
+            {
+                try
+                {
+                    _context.Person.Remove(person);
+                    await SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Failed to remove person: {ex}");
+                }
+            }
+
+            return person;
         }
     }
 }
