@@ -1,0 +1,40 @@
+﻿<div class="row">
+    <div class="col-md-6 col-md-offset-3 text-center">
+        <h2>User Administration</h2>
+    </div>
+</div>
+
+<div class="row ">
+    <div class="col-md-6 col-md-offset-3">
+        <!-- Button trigger modal -->
+        <a ng-href="#/editor/" class="btn btn-primary">Add User</a>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="text-danger" ng-show="vm.errorMessage">{{vm.errorMessage}}</div>
+    <div class="col-md-6 col-md-offset-3">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Last Name</th>
+                    <th>Date of birth</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="person in vm.people">
+                    <td>{{person.firstName}}</td>
+                    <td>{{person.lastName}}</td>
+                    <td>{{person.dateOfBirth | date: 'dd/MM/yyyy'}}</td>
+                    <td>
+                        <a ng-href="#/editor/{{person.alias}}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+                        <a ng-href="#"><i class="fa fa-trash-o fa-lg text-danger" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

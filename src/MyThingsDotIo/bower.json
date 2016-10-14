@@ -2,9 +2,14 @@
   "name": "asp.net",
   "private": true,
   "dependencies": {
+    "angular-animate": "1.5.8",
+    "angularjs": "1.5.8",
+    "angular-route": "1.5.8",
     "bootstrap": "3.3.6",
+    "font-awesome": "4.6.3",
     "jquery": "2.2.0",
     "jquery-validation": "1.14.0",
-    "jquery-validation-unobtrusive": "3.2.6"
+    "jquery-validation-unobtrusive": "3.2.6",
+    "datepicker": "*"
   }
 }
