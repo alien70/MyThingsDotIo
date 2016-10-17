@@ -6,14 +6,14 @@ namespace MyThingsDotIo.Models
 {
     public interface IMyThingsDotIoRepository
     {
-        IEnumerable<Person> GetAll();
-        Person GetByAlias(string alias);
-        Person GetByUniqueId(Guid uuid);
+        IEnumerable<User> GetAll();
+        User GetByAlias(string alias);
+        User GetByUniqueId(Guid uuid);
 
-        void Update(Person item);
-        void Add(Person item);
-        Task<Person> Remove(string alias);
-        Task<Person> Remove(Guid? uuid);
+        void Update(User item);
+        void Add(User item);
+        Task<User> Remove(string alias);
+        Task<User> Remove(Guid? uuid);
 
         Task<bool> SaveChangesAsync();
     }

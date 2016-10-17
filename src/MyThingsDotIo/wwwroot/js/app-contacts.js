@@ -18,17 +18,17 @@
             .when('/', {
                 controller: 'userController',
                 controllerAs: 'vm',
-                templateUrl: '/views/peopleView.html'
+                templateUrl: '/views/userView.html'
             })
             .when('/editor/', {
                 controller: 'userEditorController',
                 controllerAs: 'vm',
-                templateUrl: '/views/addUserView.html'
+                templateUrl: '/views/userEditorView.html'
             })
             .when('/editor/:alias', {
                 controller: 'userEditorController',
                 controllerAs: 'vm',
-                templateUrl: '/views/addUserView.html'
+                templateUrl: '/views/userEditorView.html'
             })
             .otherwise({
                 redirectTo: '/'

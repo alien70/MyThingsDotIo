@@ -18,13 +18,13 @@ namespace MyThingsDotIo.Models
             _logger = logger;
         }
 
-        public IEnumerable<Person> GetAll()
+        public IEnumerable<User> GetAll()
         {
             _logger.LogInformation("Getting all users from database");
             return _context.Person.ToList();
         }
 
-        public Person GetByAlias(string alias)
+        public User GetByAlias(string alias)
         {
             _logger.LogInformation($"Getting user by alias: {alias}");
             return _context.Person
@@ -32,7 +32,7 @@ namespace MyThingsDotIo.Models
                 .SingleOrDefault();
         }
 
-        public Person GetByUniqueId(Guid uuid)
+        public User GetByUniqueId(Guid uuid)
         {
             _logger.LogInformation($"Getting user by uuid: {uuid}");
 
@@ -41,7 +41,7 @@ namespace MyThingsDotIo.Models
                  .SingleOrDefault();
         }
 
-        public void Add(Person item)
+        public void Add(User item)
         {
             _logger.LogInformation("Adding new user to database");
 
@@ -58,7 +58,7 @@ namespace MyThingsDotIo.Models
             return (await _context.SaveChangesAsync()) > 0;
         }
 
-        public void Update(Person item)
+        public void Update(User item)
         {
             _logger.LogInformation($"Updating item {item.UniqueId}");
             var toUpdate = _context.Person.SingleOrDefault(p => p.UniqueId == item.UniqueId);
@@ -72,7 +72,7 @@ namespace MyThingsDotIo.Models
             }
         }
 
-        public async Task<Person> Remove(string alias)
+        public async Task<User> Remove(string alias)
         {
             var person = await _context.Person
                 .AsNoTracking()
@@ -94,7 +94,7 @@ namespace MyThingsDotIo.Models
             return person;
         }
 
-        public async Task<Person> Remove(Guid? uniqueId)
+        public async Task<User> Remove(Guid? uniqueId)
         {
             if (!uniqueId.HasValue)
                 return null;

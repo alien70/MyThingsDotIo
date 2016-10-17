@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyThingsDotIo.ViewModels
 {
-    public class PersonViewModel
+    public class UserViewModel
     {
         [Required]
         [StringLength(100, MinimumLength = 3)]

@@ -28,7 +28,7 @@ namespace MyThingsDotIo.Controllers.Api
             try
             {
                 var people = _repository.GetAll();
-                return Ok(Mapper.Map<IEnumerable<PersonViewModel>>(people));
+                return Ok(Mapper.Map<IEnumerable<UserViewModel>>(people));
             }
             catch (Exception ex)
             {
@@ -45,7 +45,7 @@ namespace MyThingsDotIo.Controllers.Api
             {
                 var person = _repository.GetByAlias(alias);
                 if (person != null)
-                    return Ok(Mapper.Map<PersonViewModel>(person));
+                    return Ok(Mapper.Map<UserViewModel>(person));
 
                 return NotFound();
             }
@@ -64,7 +64,7 @@ namespace MyThingsDotIo.Controllers.Api
             {
                 var person = _repository.GetByUniqueId(uuid);
                 if (person != null)
-                    return Ok(Mapper.Map<PersonViewModel>(person));
+                    return Ok(Mapper.Map<UserViewModel>(person));
 
                 return NotFound();
             }
@@ -77,17 +77,17 @@ namespace MyThingsDotIo.Controllers.Api
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> Post([FromBody] PersonViewModel vm)
+        public async Task<IActionResult> Post([FromBody] UserViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                var person = Mapper.Map<Person>(vm);
+                var person = Mapper.Map<User>(vm);
                 _logger.LogInformation("Attempting to add new user");
                 _repository.Add(person);
 
                 if (await _repository.SaveChangesAsync())
                 {
-                    return Created($"api/person/{vm.Alias}", Mapper.Map<PersonViewModel>(person));
+                    return Created($"api/person/{vm.Alias}", Mapper.Map<UserViewModel>(person));
                 }
             }
 
@@ -95,7 +95,7 @@ namespace MyThingsDotIo.Controllers.Api
         }
 
         [HttpPut("")]
-        public async Task<IActionResult> Update([FromBody] PersonViewModel vm)
+        public async Task<IActionResult> Update([FromBody] UserViewModel vm)
         {
             if (vm == null)
                 return BadRequest();
@@ -104,7 +104,7 @@ namespace MyThingsDotIo.Controllers.Api
             if (item == null)
                 return NotFound();
 
-            _repository.Update(Mapper.Map<Person>(vm));
+            _repository.Update(Mapper.Map<User>(vm));
 
             if (await _repository.SaveChangesAsync())
             {
@@ -125,7 +125,7 @@ namespace MyThingsDotIo.Controllers.Api
             if (person == null)
                 return NotFound();
 
-            return Ok(Mapper.Map<PersonViewModel>(person));
+            return Ok(Mapper.Map<UserViewModel>(person));
         }
 
         [HttpDelete("{uuid}")]
@@ -139,7 +139,7 @@ namespace MyThingsDotIo.Controllers.Api
             if (person == null)
                 return NotFound();
 
-            return Ok(Mapper.Map<PersonViewModel>(person));
+            return Ok(Mapper.Map<UserViewModel>(person));
         }
     }
 }

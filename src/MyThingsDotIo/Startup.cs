@@ -60,7 +60,7 @@ namespace MyThingsDotIo
             // Configurazione di AutoMapper
             Mapper.Initialize(config =>
             {
-                config.CreateMap<PersonViewModel, Person>().ReverseMap();
+                config.CreateMap<UserViewModel, User>().ReverseMap();
             });
 
             if (env.IsDevelopment())

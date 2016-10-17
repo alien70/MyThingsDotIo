@@ -14,7 +14,7 @@ namespace MyThingsDotIo.Models
 
         }
 
-        public DbSet<Person> Person { get; set; }
+        public DbSet<User> Person { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -25,7 +25,7 @@ namespace MyThingsDotIo.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Person>()
+            modelBuilder.Entity<User>()
                 .HasIndex(c => c.Alias)
                 .IsUnique();
         }
