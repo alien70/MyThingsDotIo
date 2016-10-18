@@ -18,18 +18,27 @@ namespace MyThingsDotIo.Models
             _logger = logger;
         }
 
+        #region User
+
         public IEnumerable<User> GetAll()
         {
             _logger.LogInformation("Getting all users from database");
-            return _context.Person.ToList();
+            return _context.Person
+                .Include(t => t.Addresses)
+                .Include(t => t.Contacts)
+                .ToList();
         }
+
 
         public User GetByAlias(string alias)
         {
             _logger.LogInformation($"Getting user by alias: {alias}");
             return _context.Person
                 .Where(p => string.Compare(p.Alias, alias, false) == 0)
-                .SingleOrDefault();
+                .Include(t => t.Addresses)
+                .Include(t => t.Contacts)
+                .OrderBy(t => t.Alias)
+                .FirstOrDefault();
         }
 
         public User GetByUniqueId(Guid uuid)
@@ -38,7 +47,10 @@ namespace MyThingsDotIo.Models
 
             return _context.Person
                  .Where(p => p.UniqueId == uuid)
-                 .SingleOrDefault();
+                .Include(t => t.Addresses)
+                .Include(t => t.Contacts)
+                .OrderBy(t => t.Alias)
+                .FirstOrDefault();
         }
 
         public void Add(User item)
@@ -118,5 +130,41 @@ namespace MyThingsDotIo.Models
 
             return person;
         }
+
+        #endregion
+
+        #region Contacts
+
+        public IEnumerable<Contact> GetContactsByAlias(string alias)
+        {
+            _logger.LogInformation($"Getting user contacts by alias: {alias}");
+
+            var contacts = _context.Person
+                .Where(p => string.Compare(p.Alias, alias, true) == 0)
+                .Include(t => t.Contacts)
+                .Select(p => p.Contacts)
+                .SingleOrDefault();
+
+            return contacts;
+        }
+
+        public void Add(string alias, Contact item)
+        {
+            _logger.LogInformation($"Adding contact to {alias}");
+            var user = GetByAlias(alias);
+
+            if (user != null)
+            {
+                item.UserId = user.Id;
+                item.UniqueId = Guid.NewGuid();
+                item.Created = DateTime.Now;
+
+                user.Contacts.Add(item);
+                _context.Contacts.Add(item);
+            }
+        }
+
+
+        #endregion
     }
 }

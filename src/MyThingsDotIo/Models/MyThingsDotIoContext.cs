@@ -15,6 +15,8 @@ namespace MyThingsDotIo.Models
         }
 
         public DbSet<User> Person { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

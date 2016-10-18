@@ -1,0 +1,18 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3>{{title}}</h3>
+        </div>
+    </div>
+    <div class="row text-justify">
+        <div class="col-md-8 col-md-offset-2">
+            <div ng-repeat="contact in contacts">
+                <span ng-show="{{contact.type === 20}}"><i class="fa fa-mobile" aria-hidden="true"></i> {{contact.value}}</span>
+                <a ng-href="mailto:{{contact.value}}" ng-show="{{contact.type === 40}}"><i class="fa fa-envelope-o" aria-hidden="true"></i> {{contact.value}}</a>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <a ng-href="#/editor/{{alias}}/contact" class="btn btn-md btn-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
+        </div>
+    </div>
+</div>

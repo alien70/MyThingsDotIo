@@ -8,9 +8,10 @@ using MyThingsDotIo.Models;
 namespace MyThingsDotIo.Migrations
 {
     [DbContext(typeof(MyThingsDotIoContext))]
-    partial class MyThingsDotIoContextModelSnapshot : ModelSnapshot
+    [Migration("20161017135310_AddedContactSupport01")]
+    partial class AddedContactSupport01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -37,8 +38,6 @@ namespace MyThingsDotIo.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Addresses");
                 });
 
@@ -62,8 +61,6 @@ namespace MyThingsDotIo.Migrations
                     b.Property<string>("Value");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Contacts");
                 });
@@ -93,22 +90,6 @@ namespace MyThingsDotIo.Migrations
                         .IsUnique();
 
                     b.ToTable("Person");
-                });
-
-            modelBuilder.Entity("MyThingsDotIo.Models.Address", b =>
-                {
-                    b.HasOne("MyThingsDotIo.Models.User")
-                        .WithMany("Addresses")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MyThingsDotIo.Models.Contact", b =>
-                {
-                    b.HasOne("MyThingsDotIo.Models.User")
-                        .WithMany("Contacts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

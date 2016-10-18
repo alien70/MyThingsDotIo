@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using MyThingsDotIo.Models;
 using MyThingsDotIo.ViewModels;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,6 +20,8 @@ namespace MyThingsDotIo.Controllers.Api
             _repository = repository;
             _logger = logger;
         }
+
+        #region User
 
         [HttpGet("")]
         public IActionResult Get()
@@ -141,5 +142,45 @@ namespace MyThingsDotIo.Controllers.Api
 
             return Ok(Mapper.Map<UserViewModel>(person));
         }
+
+        #endregion
+
+        #region Contacts
+
+        [HttpGet("{alias}/contacts")]
+        public IActionResult GetContactsByAlias(string alias)
+        {
+            try
+            {
+                var contacts = _repository.GetContactsByAlias(alias);
+                if (contacts != null)
+                    return Ok(Mapper.Map<IEnumerable<ContactViewModel>>(contacts));
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get contacts: {ex}");
+
+                return BadRequest("An error occurred");
+            }
+        }
+
+        [HttpPost("{alias}/contacts")]
+        public async Task<IActionResult> Post(string alias, [FromBody] ContactViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                var newContact = Mapper.Map<Contact>(vm);
+                _repository.Add(alias, newContact);
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Created($"api/person/{alias}/{vm.Value}", Mapper.Map<ContactViewModel>(newContact));
+                }
+            }
+
+            return BadRequest("Failed to save contact");
+        }
+        #endregion
     }
 }

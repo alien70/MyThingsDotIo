@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MyThingsDotIo.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyThingsDotIo.ViewModels
@@ -22,5 +24,6 @@ namespace MyThingsDotIo.ViewModels
 
         [Required]
         public Guid UniqueId { get; set; }
+
     }
 }

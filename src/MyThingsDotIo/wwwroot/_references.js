@@ -1,5 +1,7 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="js/app-contacts.js" />
+/// <reference path="js/contactcard.js" />
+/// <reference path="js/contactcontroller.js" />
 /// <reference path="js/site.js" />
 /// <reference path="js/usercontroller.js" />
 /// <reference path="js/usereditorcontroller.js" />

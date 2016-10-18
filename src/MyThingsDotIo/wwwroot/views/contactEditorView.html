@@ -1,0 +1,42 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2>{{vm.title}} <i>{{vm.alias}}</i></h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+            <form name="addContactForm" ng-submit="submit()" class="form-inline">
+                <div class="form-group">
+                    <div>
+                        <select class="form-control fa-select selectpicker" id="contactType" name="contactType"
+                                ng-model="vm.contact.type" title="choose contact type...">
+                            <!--<option value="" ng-selected="selected"></option>-->
+                            <option value="10">&#xf095;&nbsp;Phone</option>
+                            <option value="20">&#xf10B;&nbsp;Mobile</option>
+                            <option value="30">&#xf1AC;&nbsp;Fax</option>
+                            <option value="40">&#xf0e0;&nbsp;Email</option>
+                            <option value="50">&#xf015;&nbsp;Web</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="vm.contact.type == 10">
+                    <input id="phoneNumber" name="phoneNumber" type="tel" class="form-control" placeholder="phone number..." ng-model="vm.contact.value" />
+                </div>
+                <div class="form-group" ng-show="vm.contact.type == 20">
+                    <input id="mobileNumber" name="mobileNumber" type="tel" class="form-control" placeholder="mobile number..." ng-model="vm.contact.value" />
+                </div>
+                <div class="form-group" ng-show="vm.contact.type == 30">
+                    <input id="faxNumber" name="faxNumber" type="tel" class="form-control" placeholder="fax number..." ng-model="vm.contact.value" />
+                </div>
+                <div class="form-group" ng-show="vm.contact.type == 40">
+                    <input id="email" name="email" type="email" class="form-control" placeholder="email..." ng-model="vm.contact.value" />
+                </div>
+                <div class="form-group" ng-show="vm.contact.type == 50">
+                    <input id="webSite" name="webSite" type="url" class="form-control" placeholder="web site..." ng-model="vm.contact.value" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+</div>

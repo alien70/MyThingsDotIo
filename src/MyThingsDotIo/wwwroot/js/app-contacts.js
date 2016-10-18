@@ -30,6 +30,11 @@
                 controllerAs: 'vm',
                 templateUrl: '/views/userEditorView.html'
             })
+            .when('/editor/:alias/contact/', {
+                controller: 'contactController',
+                controllerAs: 'vm',
+                templateUrl: '/views/contactEditorView.html'
+            })
             .otherwise({
                 redirectTo: '/'
             });

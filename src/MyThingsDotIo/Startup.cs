@@ -61,6 +61,8 @@ namespace MyThingsDotIo
             Mapper.Initialize(config =>
             {
                 config.CreateMap<UserViewModel, User>().ReverseMap();
+                config.CreateMap<ContactViewModel, Contact>().ReverseMap();
+                config.CreateMap<AddressViewModel, Address>().ReverseMap();
             });
 
             if (env.IsDevelopment())

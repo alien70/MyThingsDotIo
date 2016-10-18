@@ -39,3 +39,7 @@ textarea {
 .row{
     margin-top: 4px;
 }
+
+.fa-select {
+    font-family: sans-serif, 'FontAwesome';
+}

@@ -21,12 +21,35 @@
                 .then(function (response) {
                     vm.user = {};
                     angular.copy(response.data, vm.user);
+
+                    getContacts();
+
+                    getAddresses();
+
                 }, function (error) {
                     vm.busy = false;
                 })
                 .finally(function () {
                     vm.busy = false;
                 });
+
+            function getContacts() {
+                vm.user.contacts = [];
+                $http.get(url + vm.alias + '/contacts/').
+                    then(function (response) {
+                        angular.copy(response.data, vm.user.contacts);
+                    }, function (error) {
+                        vm.erroMessage = 'Failed to get user contacts' + vm.alias + ': ' + error;
+                    })
+                    .finally(function () {
+
+                    });
+            };
+
+            function getAddresses() {
+                vm.user.addresses = [];
+                
+            };
 
             $scope.submit = function () {
                 vm.busy = true;

@@ -6,6 +6,8 @@ namespace MyThingsDotIo.Models
 {
     public interface IMyThingsDotIoRepository
     {
+        #region User
+
         IEnumerable<User> GetAll();
         User GetByAlias(string alias);
         User GetByUniqueId(Guid uuid);
@@ -16,5 +18,15 @@ namespace MyThingsDotIo.Models
         Task<User> Remove(Guid? uuid);
 
         Task<bool> SaveChangesAsync();
+
+        #endregion
+
+        #region Contacts
+
+        IEnumerable<Contact> GetContactsByAlias(string alias);
+        void Add(string alias, Contact item);
+
+        #endregion
+
     }
 }
