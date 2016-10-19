@@ -4,15 +4,44 @@
             <h3>{{title}}</h3>
         </div>
     </div>
-    <div class="row text-justify">
-        <div class="col-md-8 col-md-offset-2">
-            <div ng-repeat="contact in contacts">
-                <span ng-show="{{contact.type === 20}}"><i class="fa fa-mobile" aria-hidden="true"></i> {{contact.value}}</span>
-                <a ng-href="mailto:{{contact.value}}" ng-show="{{contact.type === 40}}"><i class="fa fa-envelope-o" aria-hidden="true"></i> {{contact.value}}</a>
-            </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form name="addContactForm" ng-submit="submit()" class="form-inline" role="form">
+                <div class="form-group">
+                    <div>
+                        <select class="form-control fa-select selectpicker" id="contactType" name="contactType"
+                                ng-model="contact.type" title="choose contact type..." ng-change="onSelectionChanged()">
+                            <!--<option value="" ng-selected="selected"></option>-->
+                            <option value="10">&#xf095;&nbsp;Phone</option>
+                            <option value="20">&#xf10B;&nbsp;Mobile</option>
+                            <option value="30">&#xf1AC;&nbsp;Fax</option>
+                            <option value="40">&#xf0e0;&nbsp;Email</option>
+                            <option value="50">&#xf015;&nbsp;Web</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input id="contactValue" name="contactValue" type="text" ng-pattern="inputPattern" class="form-control" placeholder="{{inputPlaceholde}}" ng-model="contact.value" required />
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" id="contactDefault" name="contactDefault" class="form-control" ng-model="contact.default" title="set as default" />
+                </div>
+                <button type="submit" class="btn btn-primary" ng-disabled="addContactForm.$invalid"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            </form>
         </div>
-        <div class="col-md-1">
-            <a ng-href="#/editor/{{alias}}/contact" class="btn btn-md btn-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
+    </div>
+
+    <div class="row text-justify">
+        <div class="col-md-8 col-md-offset-2 col-lg-10 col-lg-offset-1">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="contact in contacts">
+                    <span ng-show="contact.type === 10"><i class="fa fa-phone" aria-hidden="true"></i> {{contact.value}}</span>
+                    <span ng-show="contact.type === 20"><i class="fa fa-mobile" aria-hidden="true"></i> {{contact.value}}</span>
+                    <span ng-show="contact.type === 30"><i class="fa fa-fax" aria-hidden="true"></i> {{contact.value}}</span>
+                    <a ng-href="mailto:{{contact.value}}" ng-show="contact.type === 40"><i class="fa fa-envelope-o" aria-hidden="true"></i> {{contact.value}}</a>
+                    <a ng-href="{{contact.value}}" ng-show="{{contact.type === 50}}"><i class="fa fa-home" aria-hidden="true"></i> {{contact.value}}</a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

@@ -15,5 +15,7 @@ namespace MyThingsDotIo.ViewModels
 
         [Required]
         public Guid UniqueId { get; set; }
+
+        public bool Default { get; set; }
     }
 }

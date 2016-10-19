@@ -57,7 +57,7 @@
 
     <div class="row">
         <div class="col-md-6 text-center">
-            <contact-card contacts = "vm.user.contacts" title="'Contacts'" alias="vm.user.alias"></contact-card>
+            <contact-card contacts = "vm.user.contacts" title="'Contacts'" url="'/api/person/' + vm.user.alias + '/contacts'" ></contact-card>
         </div>
         <div class="col-md-6">
             <ng-include src="'/views/addressView.html'"></ng-include>
