@@ -14,8 +14,8 @@ namespace MyThingsDotIo.Models
 
         void Update(User item);
         void Add(User item);
-        Task<User> Remove(string alias);
-        Task<User> Remove(Guid? uuid);
+        Task<User> RemoveUser(string alias);
+        Task<User> RemoveUser(Guid? uuid);
 
         Task<bool> SaveChangesAsync();
 

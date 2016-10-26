@@ -84,7 +84,7 @@ namespace MyThingsDotIo.Models
             }
         }
 
-        public async Task<User> Remove(string alias)
+        public async Task<User> RemoveUser(string alias)
         {
             var person = await _context.Person
                 .AsNoTracking()
@@ -106,7 +106,7 @@ namespace MyThingsDotIo.Models
             return person;
         }
 
-        public async Task<User> Remove(Guid? uniqueId)
+        public async Task<User> RemoveUser(Guid? uniqueId)
         {
             if (!uniqueId.HasValue)
                 return null;

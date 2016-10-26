@@ -116,12 +116,12 @@ namespace MyThingsDotIo.Controllers.Api
         }
 
         [HttpDelete("{alias}")]
-        public async Task<IActionResult> Delete(string alias)
+        public async Task<IActionResult> DeleteUser(string alias)
         {
             if (alias == null || alias.Length == 0)
                 return BadRequest();
 
-            var person = await _repository.Remove(alias);
+            var person = await _repository.RemoveUser(alias);
 
             if (person == null)
                 return NotFound();
@@ -130,12 +130,12 @@ namespace MyThingsDotIo.Controllers.Api
         }
 
         [HttpDelete("{uuid}")]
-        public async Task<IActionResult> Delete(Guid? uniqueId)
+        public async Task<IActionResult> DeleteUser(Guid? uniqueId)
         {
             if (!uniqueId.HasValue)
                 return BadRequest();
 
-            var person = await _repository.Remove(uniqueId);
+            var person = await _repository.RemoveUser(uniqueId);
 
             if (person == null)
                 return NotFound();
