@@ -145,7 +145,7 @@ namespace MyThingsDotIo.Models
                 .Select(p => p.Contacts)
                 .SingleOrDefault();
 
-            return contacts;
+            return contacts.OrderByDescending(c => c.Default ? 1 : 0);
         }
 
         public void Add(string alias, Contact item)
@@ -164,6 +164,27 @@ namespace MyThingsDotIo.Models
             }
         }
 
+        public async Task<Contact> RemoveContact(Guid? uniqueId)
+        {
+            var contact = await _context.Contacts
+                .AsNoTracking()
+                .SingleOrDefaultAsync(i => i.UniqueId == uniqueId);
+
+            if (contact != null)
+            {
+                try
+                {
+                    _context.Contacts.Remove(contact);
+                    await SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Failed to remove contact: {ex}");
+                }
+            }
+
+            return contact;
+        }
 
         #endregion
     }

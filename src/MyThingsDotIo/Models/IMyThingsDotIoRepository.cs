@@ -25,7 +25,7 @@ namespace MyThingsDotIo.Models
 
         IEnumerable<Contact> GetContactsByAlias(string alias);
         void Add(string alias, Contact item);
-
+        Task<Contact> RemoveContact(Guid? uuid);
         #endregion
 
     }

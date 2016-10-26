@@ -181,6 +181,22 @@ namespace MyThingsDotIo.Controllers.Api
 
             return BadRequest("Failed to save contact");
         }
+
+        [HttpDelete("{alias}/contacts/{uniqueId}")]
+        public async Task<IActionResult> DeleteContact(Guid? uniqueId)
+        {
+            if (!uniqueId.HasValue)
+                return BadRequest();
+
+            var contact = await _repository.RemoveContact(uniqueId);
+
+            if (contact == null)
+                return NotFound();
+
+            return Ok(Mapper.Map<ContactViewModel>(contact));
+                 
+        }
+
         #endregion
     }
 }

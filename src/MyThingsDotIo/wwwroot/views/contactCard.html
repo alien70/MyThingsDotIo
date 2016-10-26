@@ -40,6 +40,7 @@
                     <span ng-show="contact.type === 30"><i class="fa fa-fax" aria-hidden="true"></i> {{contact.value}}</span>
                     <a ng-href="mailto:{{contact.value}}" ng-show="contact.type === 40"><i class="fa fa-envelope-o" aria-hidden="true"></i> {{contact.value}}</a>
                     <a ng-href="{{contact.value}}" ng-show="{{contact.type === 50}}"><i class="fa fa-home" aria-hidden="true"></i> {{contact.value}}</a>
+                    <a href="" style="float:right;" ng-click="remove(contact.uniqueId)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                 </li>
             </ul>
         </div>

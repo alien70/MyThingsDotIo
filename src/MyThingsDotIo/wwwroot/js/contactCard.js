@@ -89,6 +89,42 @@
                         })
                 };
 
+                $scope.remove = function (uniqueId) {
+                    $scope.busy = true;
+                    $http.delete($scope.url + '/' + uniqueId)
+                        .then(function (response) {
+                            $scope.contact = {};
+                            var contacts = eval($scope.contacts);
+                            var index = -1;
+                            for (var i = 0; i < contacts.length; i++) {
+                                if (contacts[i].uniqueId === uniqueId) {
+                                    index = i;
+                                    break;
+                                }
+                            }
+
+                            if (index < 0) {
+                                $scope.busy = false;
+                                $scope.erroMessage = 'Failed to delete contact ' + uniqueId + ': ' + error;
+                            } else {
+                                contacts.splice(index, 1);
+
+                                $scope.contact = {
+                                    type: '10',
+                                    value: null,
+                                    default: false,
+                                };
+                            }
+
+                            $location.path($scope.url);
+                        }, function (error) {
+                            $scope.busy = false;
+                            $scope.erroMessage = 'Failed to delete contact ' + uniqueId + ': ' + error;
+                        })
+                    .finally(function () {
+                        $scope.busy = false;
+                    });
+                };
 
             }],
 
